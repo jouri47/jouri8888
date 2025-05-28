@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function serveerPizza() {
-    // Stoom-animatie en shine
     stoomAfbeelding.classList.add("steam-animate");
     stoomAfbeelding.style.opacity = "1";
 
