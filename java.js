@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let saldo = 1.00;
   const maxSaldo = 5.00;
 
+  // Anneke Slagter heeft me geholpen met deze code //
   function toonSaldo() {
     saldoDisplay.textContent = "€" + saldo.toFixed(2);
   }
@@ -18,11 +19,15 @@ document.addEventListener("DOMContentLoaded", function() {
   function voegToppingToe(naamVanTopping) {
     if (saldo < 0.50) {
       werkBericht.style.display = "block";
+
+      // Geluid bij geen geld: https://mixkit.co/free-sound-effects/game-over/
       new Audio("sounds/no-money.wav").play();
       return;
     }
 
     const afbeelding = document.createElement("img");
+
+    // Toppings: https://nl.freepik.com/vrije-vector/set-van-pizza-elementen_4430118.htm
     afbeelding.src = "images/" + naamVanTopping + ".png";
     afbeelding.classList.add("topping");
 
@@ -36,12 +41,15 @@ document.addEventListener("DOMContentLoaded", function() {
     toonSaldo();
 
     if (naamVanTopping === "Ananas") {
+      // Geluid bij ananas: (eigen bestand 'eww.m4a')
       new Audio("sounds/eww.m4a").play();
     }
   }
 
   function serveerPizza() {
+    // Stoom-animatie en shine
     stoomAfbeelding.classList.add("steam-animate");
+    stoomAfbeelding.style.opacity = "1";
 
     const alleToppings = document.querySelectorAll(".topping");
     alleToppings.forEach(function(topping) {
@@ -71,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
   toppings.forEach(function(naam) {
     const knop = document.createElement("button");
 
+    let emoji = "🍕";
     if (naam === "Kaas") emoji = "🧀";
     if (naam === "Tomaat") emoji = "🍅";
     if (naam === "Pepperoni") emoji = "🍖";
