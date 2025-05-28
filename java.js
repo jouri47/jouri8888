@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function() {
   toppings.forEach(function(naam) {
     const knop = document.createElement("button");
 
-    let emoji = "🍕";
+    let emoji;
     if (naam === "Kaas") emoji = "🧀";
     if (naam === "Tomaat") emoji = "🍅";
     if (naam === "Pepperoni") emoji = "🍖";
