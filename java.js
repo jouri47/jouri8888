@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
     saldo -= 0.50;
     toonSaldo();
 
+     // ChatGPT-Prompt: "JavaScript: ik wil een geluid afspelen als de gekozen topping 'Ananas' is."
     if (naamVanTopping === "Ananas") {
       // Geluid bij ananas: (eigen bestand 'eww.m4a')
       new Audio("sounds/eww.m4a").play();
