@@ -1,102 +1,108 @@
-document.addEventListener("DOMContentLoaded", function() {
+let saldo = 1.00;
+let maxSaldo = 5.00;
 
-  const toppings = ["Kaas", "Tomaat", "Pepperoni", "Ananas"];
-  const saldoDisplay = document.getElementById("saldo");
-  const buttonsContainer = document.getElementById("buttons");
-  const werkKnop = document.getElementById("work-button");
-  const werkBericht = document.getElementById("work-message");
-  const toppingsVak = document.getElementById("toppings-container");
-  const stoomAfbeelding = document.getElementById("steam");
+const saldoTekst = document.getElementById("saldo");
+const werkKnop = document.getElementById("work-button");
+const werkBericht = document.getElementById("work-message");
+const toppingsPlek = document.getElementById("toppings-container");
+const knoppen = document.getElementById("buttons");
+const stoom = document.getElementById("steam");
 
-  let saldo = 1.00;
-  const maxSaldo = 5.00;
+function updateSaldo() {
+  saldoTekst.textContent = "€" + saldo.toFixed(2);
+}
 
-  // Anneke Slagter heeft me geholpen met deze code //
-  function toonSaldo() {
-    saldoDisplay.textContent = "€" + saldo.toFixed(2);
+let knopKaas = document.createElement("button");
+knopKaas.textContent = "🧀 Kaas";
+knopKaas.onclick = function() {
+  voegToppingToe("Kaas");
+};
+knoppen.appendChild(knopKaas);
+
+let knopTomaat = document.createElement("button");
+knopTomaat.textContent = "🍅 Tomaat";
+knopTomaat.onclick = function() {
+  voegToppingToe("Tomaat");
+};
+knoppen.appendChild(knopTomaat);
+
+let knopPepperoni = document.createElement("button");
+knopPepperoni.textContent = "🍖 Pepperoni";
+knopPepperoni.onclick = function() {
+  voegToppingToe("Pepperoni");
+};
+knoppen.appendChild(knopPepperoni);
+
+let knopAnanas = document.createElement("button");
+knopAnanas.textContent = "🍍 Ananas";
+knopAnanas.onclick = function() {
+  voegToppingToe("Ananas");
+};
+knoppen.appendChild(knopAnanas);
+
+let knopServeer = document.createElement("button");
+knopServeer.textContent = "🍽️ Serveer de pizza!";
+knopServeer.onclick = function() {
+  serveerPizza();
+};
+knoppen.appendChild(knopServeer);
+
+/*
+Als je op de werkknop klikt:
+- krijg je €1.00 (als je nog geen 5 euro hebt)
+- het werkbericht verdwijnt weer
+*/
+werkKnop.onclick = function() {
+  if (saldo < maxSaldo) {
+    saldo = saldo + 1.00;
+    updateSaldo();
+    werkBericht.style.display = "none";
+  }
+};
+
+function voegToppingToe(naam) {
+  if (saldo < 0.50) {
+    werkBericht.style.display = "block";
+    // Geluid bij geen geld: https://mixkit.co/free-sound-effects/game-over/
+    new Audio("sounds/no-money.wav").play();
+    return;
   }
 
-  function voegToppingToe(naamVanTopping) {
-    if (saldo < 0.50) {
-      werkBericht.style.display = "block";
+  // Toppings: https://nl.freepik.com/vrije-vector/set-van-pizza-elementen_4430118.htm
+  let plaatje = document.createElement("img");
+  plaatje.src = "images/" + naam + ".png";
+  plaatje.className = "topping";
+  plaatje.style.left = "40px";
+  plaatje.style.top = "40px";
+  toppingsPlek.appendChild(plaatje);
 
-      // Geluid bij geen geld: https://mixkit.co/free-sound-effects/game-over/
-      new Audio("sounds/no-money.wav").play();
-      return;
-    }
+  saldo = saldo - 0.50;
+  updateSaldo();
 
-    const afbeelding = document.createElement("img");
-
-    // Toppings: https://nl.freepik.com/vrije-vector/set-van-pizza-elementen_4430118.htm
-    afbeelding.src = "images/" + naamVanTopping + ".png";
-    afbeelding.classList.add("topping");
-
-    afbeelding.style.position = "absolute";
-    afbeelding.style.left = "40px";
-    afbeelding.style.top = "40px";
-
-    toppingsVak.appendChild(afbeelding);
-
-    saldo -= 0.50;
-    toonSaldo();
-
-     // ChatGPT-Prompt: "JavaScript: ik wil een geluid afspelen als de gekozen topping 'Ananas' is."
-    if (naamVanTopping === "Ananas") {
-      // Geluid bij ananas: (eigen bestand 'eww.m4a')
-      new Audio("sounds/eww.m4a").play();
-    }
+  // ChatGPT-Prompt: "JavaScript: ik wil een geluid afspelen als de gekozen topping 'Ananas' is."
+  if (naam === "Ananas") {
+    // Geluid bij ananas: (eigen bestand 'eww.m4a')
+    new Audio("sounds/eww.m4a").play();
   }
+}
 
-  function serveerPizza() {
-    stoomAfbeelding.classList.add("steam-animate");
-    stoomAfbeelding.style.opacity = "1";
+function serveerPizza() {
+  stoom.classList.add("steam-animate");
+  stoom.style.opacity = "1";
 
-    const alleToppings = document.querySelectorAll(".topping");
-    alleToppings.forEach(function(topping) {
-      topping.classList.add("shine-animate");
-    });
-
-    setTimeout(function() {
-      stoomAfbeelding.classList.remove("steam-animate");
-      stoomAfbeelding.style.opacity = "0";
-
-      alleToppings.forEach(function(topping) {
-        topping.classList.remove("shine-animate");
-      });
-    }, 2000);
-  }
-
-  function werkVoorGeld() {
-    if (saldo < maxSaldo) {
-      saldo += 1.00;
-      toonSaldo();
-      werkBericht.style.display = "none";
-    }
-  }
-
-  toonSaldo();
-
-  toppings.forEach(function(naam) {
-    const knop = document.createElement("button");
-
-    let emoji;
-    if (naam === "Kaas") emoji = "🧀";
-    if (naam === "Tomaat") emoji = "🍅";
-    if (naam === "Pepperoni") emoji = "🍖";
-    if (naam === "Ananas") emoji = "🍍";
-
-    knop.textContent = emoji + " " + naam;
-    knop.addEventListener("click", function() {
-      voegToppingToe(naam);
-    });
-
-    buttonsContainer.appendChild(knop);
+  let alleToppings = document.querySelectorAll(".topping");
+  alleToppings.forEach(function(el) {
+    el.classList.add("shine-animate");
   });
 
-  const serveerKnop = document.createElement("button");
-  serveerKnop.textContent = "🍽️ Serveer de pizza!";
-  serveerKnop.addEventListener("click", serveerPizza);
-  buttonsContainer.appendChild(serveerKnop);
+  setTimeout(function() {
+    stoom.classList.remove("steam-animate");
+    stoom.style.opacity = "0";
+    alleToppings.forEach(function(el) {
+      el.classList.remove("shine-animate");
+    });
+  }, 2000);
+}
 
-  werkKnop.addEventListener("click", werkVoorGeld);
-});
+// Startwaarde laten zien als de pagina opent
+updateSaldo();
