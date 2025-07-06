@@ -1,0 +1,144 @@
+* {
+  font-family: 'Fredoka', sans-serif;
+}
+
+body {
+  background-color: #fff4e1;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  color: #c1440e;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+#saldo-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #f7c8a6;
+  padding: 10px 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+#saldo-display {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #e45000;
+}
+
+.pizza-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 20px auto;
+}
+
+#pizza-base {
+  width: 100%;
+  height: auto;
+  display: flex;
+}
+
+#toppings-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.topping {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  transition: transform 0.3s;
+  z-index: 2;
+}
+
+#buttons button {
+  background-color: #fdd390;
+  border: none;
+  margin: 10px;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#buttons button:hover {
+  background-color: #fbc16d;
+}
+
+#work-section {
+  margin-top: 20px;
+}
+
+#work-button {
+  background-color: #f7c8a6;
+  font-size: 1.5em;
+  padding: 15px 30px;
+  border-radius: 15px;
+  transition: background-color 0.3s, transform 0.3s;
+  border: none;
+}
+
+#work-button:hover {
+  background-color: #fbc16d;
+  transform: scale(1.1);
+}
+
+#work-message {
+  display: none;
+  color: #e45000;
+  font-size: 1.5em;
+  margin-top: 10px;
+}
+
+#steam {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 180px;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.steam-animate {
+  animation: steam-rise 2s ease-out forwards;
+}
+
+.shine-animate {
+  animation: shine 1.5s ease-in-out infinite;
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-60px);
+  }
+}
+
+@keyframes shine {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.6);
+  }
+}
